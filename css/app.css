@@ -1,0 +1,54 @@
+.hamsterwheel {
+    position: fixed;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    width: 200px;
+}
+.hamsterwheel > .wheel {
+    color: #09815c;
+    opacity: 0.5;
+    animation: 2s linear infinite wheel;
+}
+@keyframes wheel {
+    to {
+        transform: rotate(360deg);
+    }
+}
+.hamsterwheel > .hamster {
+    transform: rotate(20deg);
+    animation: 1.5s ease-in-out infinite alternate hamster;
+}
+@keyframes hamster {
+    to {
+        transform: rotate(-20deg);
+    }
+}
+.hamsterwheel > .hamster > .paws {
+    animation: 0.25s ease-in-out infinite alternate paws;
+}
+@keyframes paws {
+    50% {
+        transform: translateY(2px) rotate(-10deg);
+    }
+}
+.hamsterwheel > .hamster > .eye {
+    animation: 2s linear infinite alternate eye;
+}
+@keyframes eye {
+    0% {
+        color: #f7fafc;
+    }
+    95% {
+        color: #f7fafc;
+    }
+    100% {
+        color: #bb5506;
+    }
+}
+.hamsterwheel > .hamster > .fur {
+    color: #bb5506;
+}
+.hidden {
+    display: none;
+}
