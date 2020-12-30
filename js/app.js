@@ -1,9 +1,16 @@
 $(function () {
+    getUserId();
     getProfile();
     getExperience();
 });
 
-var baseUrl = "https://thaocv.herokuapp.com/";
+var baseUrl = "https://thaocv.herokuapp.com";
+var id = "";
+
+function getUserId() {
+    let urlParams = new URLSearchParams(window.location.search);
+    id = urlParams.get('id');
+}
 
 function showOverLay(element) {
     $(element).LoadingOverlay("show", {
@@ -18,7 +25,7 @@ function hideOverLay(element) {
 function getProfile() {
     showOverLay("#about");
     $.ajax({
-        url: baseUrl + 'users/5feaa73425b178c88d3b045b/profile',
+        url: `${baseUrl}/profile/${id}`,
         dataType: 'json',
         method: 'GET',
         data: {},
@@ -52,12 +59,12 @@ function getProfile() {
 function getExperience() {
     showOverLay("#experience");
     $.ajax({
-        url: baseUrl + 'users/5feaa73425b178c88d3b045b/experience',
+        url: `${baseUrl}/experience/${id}`,
         dataType: 'json',
         method: 'GET',
         data: {},
         success: function (res) {
-            if (typeof res.data !== "undefined") {
+            if (typeof res.data !== "undefined" && res.data !== null) {
                 for (let i = 0; i < res.data.length; i++) {
                     let card = `<div class="card">
                         <div class="row">
