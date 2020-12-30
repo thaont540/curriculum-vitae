@@ -3,6 +3,8 @@ $(function () {
     getExperience();
 });
 
+var baseUrl = "https://thaocv.herokuapp.com/";
+
 function showOverLay(element) {
     $(element).LoadingOverlay("show", {
         image : "",
@@ -16,7 +18,7 @@ function hideOverLay(element) {
 function getProfile() {
     showOverLay("#about");
     $.ajax({
-        url: 'http://localhost:8080/users/5feaa73425b178c88d3b045b/profile',
+        url: baseUrl + 'users/5feaa73425b178c88d3b045b/profile',
         dataType: 'json',
         method: 'GET',
         data: {},
@@ -50,7 +52,7 @@ function getProfile() {
 function getExperience() {
     showOverLay("#experience");
     $.ajax({
-        url: 'http://localhost:8080/users/5feaa73425b178c88d3b045b/experience',
+        url: baseUrl + 'users/5feaa73425b178c88d3b045b/experience',
         dataType: 'json',
         method: 'GET',
         data: {},
