@@ -1,16 +1,26 @@
 $(function () {
-    $.LoadingOverlay("show", {
+    getProfile();
+    getExperience();
+});
+
+function showOverLay(element) {
+    $(element).LoadingOverlay("show", {
         image : "",
         custom : $('.spinner').removeClass('hidden')
     });
-    var hideOverLayCount = 1;
+}
+function hideOverLay(element) {
+    $(element).LoadingOverlay("hide");
+}
+
+function getProfile() {
+    showOverLay("#about");
     $.ajax({
-        url: 'http://localhost:8080/thao@gmail.com',
+        url: 'http://localhost:8080/users/5feaa73425b178c88d3b045b/profile',
         dataType: 'json',
         method: 'GET',
         data: {},
         success: function (res) {
-            hideOverLayCount -= 1;
             if (typeof res.data !== "undefined") {
                 let info = Object.keys(res.data);
                 for (let i in info) {
@@ -27,17 +37,58 @@ $(function () {
                 alert("em bị lỗi cmnr")
             }
 
-            hideOverLay();
+            hideOverLay("#about");
         },
         error: function (error) {
             // loading from default json
+            hideOverLay("#about");
             alert("em bị lỗi cmnr")
         }
     });
+}
 
-    function hideOverLay() {
-        if (hideOverLayCount === 0) {
-            $.LoadingOverlay("hide");
+function getExperience() {
+    showOverLay("#experience");
+    $.ajax({
+        url: 'http://localhost:8080/users/5feaa73425b178c88d3b045b/experience',
+        dataType: 'json',
+        method: 'GET',
+        data: {},
+        success: function (res) {
+            if (typeof res.data !== "undefined") {
+                for (let i = 0; i < res.data.length; i++) {
+                    let card = `<div class="card">
+                        <div class="row">
+                            <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50" data-aos-duration="500">
+                                <div class="card-body cc-experience-header">
+                                <p>${moment(res.data[i].start_date).format("DD/MM/Y")} - ${moment(res.data[i].end_date).format("DD/MM/Y")}</p>
+                                    <div class="h5">${res.data[i].position}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
+                                <div class="card-body">
+                                    <div class="h5">${res.data[i].project}</div>
+                                    <p><b>Description</b>: ${res.data[i].description}</p>
+                                    <p><b>Technical</b>: ${res.data[i].technical}</p>
+                                    <p><b>Team size</b>: ${res.data[i].team_size}</p>
+                                    <p><b>Effort</b>: ${res.data[i].effort}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+                    $('.experience-content').append(card);
+                }
+            } else {
+                // loading from default json
+                alert("em bị lỗi cmnr")
+            }
+
+            hideOverLay("#experience");
+        },
+        error: function (error) {
+            // loading from default json
+            hideOverLay("#experience");
+            alert("em bị lỗi cmnr")
         }
-    }
-});
+    });
+}
