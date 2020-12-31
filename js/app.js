@@ -7,7 +7,7 @@ $(function () {
 
 var baseUrl = "https://thaocv.herokuapp.com";
 // var baseUrl = "http://localhost:8080";
-var id = "";
+var id = '';
 
 function getUserId() {
     let urlParams = new URLSearchParams(window.location.search);
