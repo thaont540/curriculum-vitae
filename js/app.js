@@ -2,9 +2,11 @@ $(function () {
     getUserId();
     getProfile();
     getExperience();
+    getEducation();
 });
 
 var baseUrl = "https://thaocv.herokuapp.com";
+// var baseUrl = "http://localhost:8080";
 var id = "";
 
 function getUserId() {
@@ -70,7 +72,7 @@ function getExperience() {
                         <div class="row">
                             <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50" data-aos-duration="500">
                                 <div class="card-body cc-experience-header">
-                                <p>${moment(res.data[i].start_date).format("DD/MM/Y")} - ${moment(res.data[i].end_date).format("DD/MM/Y")}</p>
+                                <p>${moment(res.data[i].start_date).format("MM/Y")} - ${moment(res.data[i].end_date).format("MM/Y")}</p>
                                     <div class="h5">${res.data[i].position}</div>
                                 </div>
                             </div>
@@ -97,6 +99,50 @@ function getExperience() {
         error: function (error) {
             // loading from default json
             hideOverLay("#experience");
+            alert("em bị lỗi cmnr")
+        }
+    });
+}
+
+function getEducation() {
+    showOverLay("#education");
+    $.ajax({
+        url: `${baseUrl}/education/${id}`,
+        dataType: 'json',
+        method: 'GET',
+        data: {},
+        success: function (res) {
+            if (typeof res.data !== "undefined" && res.data !== null) {
+                for (let i = 0; i < res.data.length; i++) {
+                    let card = `<div class="card">
+                        <div class="row">
+                            <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50" data-aos-duration="500">
+                                <div class="card-body cc-education-header">
+                                    <p>${moment(res.data[i].start_date).format("MM/Y")} - ${moment(res.data[i].end_date).format("MM/Y")}</p>
+                                    <div class="h5">${res.data[i].certificate}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
+                                <div class="card-body">
+                                    <div class="h5">${res.data[i].school}</div>
+                                    <p class="category">${res.data[i].major}</p>
+                                    <p>${res.data[i].description}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+                    $('.education-content').append(card);
+                }
+            } else {
+                // loading from default json
+                alert("em bị lỗi cmnr")
+            }
+
+            hideOverLay("#education");
+        },
+        error: function (error) {
+            // loading from default json
+            hideOverLay("#education");
             alert("em bị lỗi cmnr")
         }
     });
